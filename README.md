@@ -1,6 +1,6 @@
 # Task API
 
-A simple in-memory to-do list API built with FastAPI. Supports full CRUD operations, optional filtering and search, task statistics, and a reset endpoint. Data lives only in memory — restarting the server resets everything back to the 3 seed tasks, which is intentional for this assignment.
+A simple in-memory to-do list API built with FastAPI. Supports full CRUD operations, optional filtering and search, task statistics, and a reset endpoint. Data lives only in memory - restarting the server resets everything back to the 3 seed tasks, which is intentional for this assignment.
 
 ---
 
@@ -93,13 +93,13 @@ Restarting `uvicorn` clears all tasks and restores the 3 seed tasks. This is bec
 
 ### What the AI got wrong or skipped
 
-- The AI reset endpoint returned a new list literal instead of copying from a shared `SEED_TASKS` constant, meaning the seed was duplicated in two places — a maintenance hazard.
+- The AI reset endpoint returned a new list literal instead of copying from a shared `SEED_TASKS` constant, meaning the seed was duplicated in two places - a maintenance hazard.
 - It did not strip whitespace from the title in the POST handler, so `{"title": "  "}` would pass validation and create a blank task.
 - The PUT route did not validate a blank title when the field was explicitly provided, missing the 400 requirement for `{"title": ""}`.
 
 ### What my prompt forgot to specify
 
-I did not tell the AI where to place the models (before or after `app = FastAPI()`), so its ordering differed slightly from mine. One extra sentence — "define Pydantic models before instantiating the app" — would have closed that gap.
+I did not tell the AI where to place the models (before or after `app = FastAPI()`), so its ordering differed slightly from mine. One extra sentence - "define Pydantic models before instantiating the app" — would have closed that gap.
 
 ### Rematch (improved prompt run)
 
