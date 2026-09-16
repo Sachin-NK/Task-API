@@ -16,11 +16,13 @@ app = FastAPI(title="Task API", version="1.0")
 # In-memory store
 # ---------------------------------------------------------------------------
 
-tasks = [
+SEED_TASKS = [
     {"id": 1, "title": "Buy groceries", "done": False},
     {"id": 2, "title": "Read a book", "done": True},
     {"id": 3, "title": "Go for a walk", "done": False},
 ]
+
+tasks = [t.copy() for t in SEED_TASKS]
 
 next_id = 4
 
@@ -123,3 +125,15 @@ def stats():
     total = len(tasks)
     done = sum(1 for t in tasks if t["done"])
     return {"total": total, "done": done, "open": total - done}
+
+
+# ---------------------------------------------------------------------------
+# Reset endpoint
+# ---------------------------------------------------------------------------
+
+@app.post("/reset", summary="Reset tasks to seed data")
+def reset():
+    global tasks, next_id
+    tasks = [t.copy() for t in SEED_TASKS]
+    next_id = 4
+    return tasks
