@@ -112,3 +112,14 @@ def delete_task(task_id: int):
     if not task:
         raise HTTPException(status_code=404, detail=f"Task {task_id} not found")
     tasks.remove(task)
+
+
+# ---------------------------------------------------------------------------
+# Stats endpoint
+# ---------------------------------------------------------------------------
+
+@app.get("/stats", summary="Task statistics")
+def stats():
+    total = len(tasks)
+    done = sum(1 for t in tasks if t["done"])
+    return {"total": total, "done": done, "open": total - done}
