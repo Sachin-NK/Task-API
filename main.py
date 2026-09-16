@@ -52,10 +52,12 @@ def health():
 # ---------------------------------------------------------------------------
 
 @app.get("/tasks", summary="List all tasks")
-def list_tasks(done: bool | None = None):
+def list_tasks(done: bool | None = None, search: str | None = None):
     result = tasks
     if done is not None:
         result = [t for t in result if t["done"] == done]
+    if search is not None:
+        result = [t for t in result if search.lower() in t["title"].lower()]
     return result
 
 
