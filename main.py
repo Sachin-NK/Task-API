@@ -57,3 +57,18 @@ def get_task(task_id: int):
     if not task:
         raise HTTPException(status_code=404, detail=f"Task {task_id} not found")
     return task
+
+
+# ---------------------------------------------------------------------------
+# Create endpoint
+# ---------------------------------------------------------------------------
+
+@app.post("/tasks", summary="Create a task", status_code=201)
+def create_task(body: TaskCreate):
+    global next_id
+    if not body.title.strip():
+        raise HTTPException(status_code=400, detail="title is required and cannot be empty")
+    task = {"id": next_id, "title": body.title.strip(), "done": False}
+    tasks.append(task)
+    next_id += 1
+    return task
