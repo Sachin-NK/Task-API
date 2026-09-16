@@ -52,12 +52,6 @@ content-type: application/json
 Open [http://localhost:8000/docs](http://localhost:8000/docs) after starting the server.
 FastAPI generates the interactive docs automatically — no extra setup needed.
 
-![Swagger UI screenshot](swagger-screenshot.png)
-
-*(Take a screenshot of `/docs` showing all endpoints and save it as `swagger-screenshot.png` in the project root.)*
-
----
-
 ## What happens when you restart the server?
 
 Restarting `uvicorn` clears all tasks and restores the 3 seed tasks. This is because data is stored in a plain Python list in memory — there is no database or file. Every new process starts fresh, which is exactly the intended behaviour for this assignment.
