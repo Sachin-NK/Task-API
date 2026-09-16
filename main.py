@@ -1,4 +1,9 @@
 from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
+
+
+class TaskCreate(BaseModel):
+    title: str
 
 app = FastAPI(title="Task API", version="1.0")
 
