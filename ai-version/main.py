@@ -5,6 +5,7 @@ Generated from the prompt in README.md — not manually edited.
 
 from fastapi import FastAPI, HTTPException, Response
 from pydantic import BaseModel
+from typing import Optional
 
 
 # ---------------------------------------------------------------------------
@@ -16,8 +17,8 @@ class TaskCreate(BaseModel):
 
 
 class TaskUpdate(BaseModel):
-    title: str | None = None
-    done: bool | None = None
+    title: Optional[str] = None
+    done: Optional[bool] = None
 
 
 # ---------------------------------------------------------------------------
@@ -26,7 +27,7 @@ class TaskUpdate(BaseModel):
 
 app = FastAPI(title="Task API", version="1.0")
 
-tasks: list[dict] = [
+tasks: list = [
     {"id": 1, "title": "Buy groceries", "done": False},
     {"id": 2, "title": "Read a book", "done": True},
     {"id": 3, "title": "Go for a walk", "done": False},
@@ -39,7 +40,7 @@ next_id: int = 4
 # Helpers
 # ---------------------------------------------------------------------------
 
-def find_task(task_id: int) -> dict | None:
+def find_task(task_id: int):
     for task in tasks:
         if task["id"] == task_id:
             return task
@@ -77,7 +78,7 @@ def health():
     summary="List all tasks",
     description="Returns tasks. Filter by ?done=true/false and/or ?search=<term>.",
 )
-def list_tasks(done: bool | None = None, search: str | None = None):
+def list_tasks(done: Optional[bool] = None, search: Optional[str] = None):
     result = tasks
     if done is not None:
         result = [t for t in result if t["done"] == done]

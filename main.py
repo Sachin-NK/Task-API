@@ -1,5 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
+from typing import Optional
 
 
 class TaskCreate(BaseModel):
@@ -7,8 +8,8 @@ class TaskCreate(BaseModel):
 
 
 class TaskUpdate(BaseModel):
-    title: str | None = None
-    done: bool | None = None
+    title: Optional[str] = None
+    done: Optional[bool] = None
 
 
 app = FastAPI(title="Task API", version="1.0")
@@ -72,7 +73,7 @@ def health():
         "Both query params can be combined."
     ),
 )
-def list_tasks(done: bool | None = None, search: str | None = None):
+def list_tasks(done: Optional[bool] = None, search: Optional[str] = None):
     result = tasks
     if done is not None:
         result = [t for t in result if t["done"] == done]
