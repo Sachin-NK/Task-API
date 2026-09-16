@@ -95,3 +95,15 @@ def update_task(task_id: int, body: TaskUpdate):
     if body.done is not None:
         task["done"] = body.done
     return task
+
+
+# ---------------------------------------------------------------------------
+# Delete endpoint
+# ---------------------------------------------------------------------------
+
+@app.delete("/tasks/{task_id}", summary="Delete a task", status_code=204)
+def delete_task(task_id: int):
+    task = find_task(task_id)
+    if not task:
+        raise HTTPException(status_code=404, detail=f"Task {task_id} not found")
+    tasks.remove(task)
