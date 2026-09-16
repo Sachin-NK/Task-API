@@ -52,8 +52,11 @@ def health():
 # ---------------------------------------------------------------------------
 
 @app.get("/tasks", summary="List all tasks")
-def list_tasks():
-    return tasks
+def list_tasks(done: bool | None = None):
+    result = tasks
+    if done is not None:
+        result = [t for t in result if t["done"] == done]
+    return result
 
 
 @app.get("/tasks/{task_id}", summary="Get a task by ID")
