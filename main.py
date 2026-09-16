@@ -77,3 +77,21 @@ def create_task(body: TaskCreate):
     tasks.append(task)
     next_id += 1
     return task
+
+
+# ---------------------------------------------------------------------------
+# Update endpoint
+# ---------------------------------------------------------------------------
+
+@app.put("/tasks/{task_id}", summary="Update a task")
+def update_task(task_id: int, body: TaskUpdate):
+    task = find_task(task_id)
+    if not task:
+        raise HTTPException(status_code=404, detail=f"Task {task_id} not found")
+    if body.title is not None:
+        if not body.title.strip():
+            raise HTTPException(status_code=400, detail="title cannot be empty")
+        task["title"] = body.title.strip()
+    if body.done is not None:
+        task["done"] = body.done
+    return task
